@@ -12,6 +12,11 @@
 conda env create --file envname.yml
 ```
 
+### Environment variables
+
+- Rename `.env.sample` to `.env`
+- Add your password and username to the `.env` file
+
 ## Usage
 
 ## Specify search region
@@ -35,16 +40,22 @@ List available product data via `geojson`
 sentinelsat -u <user> -p <password> -g <search_polygon.geojson>
 ```
 
+List available sentinel 2 product data via `geojson` with less than 30 percent cloud coverage from now to 14 days ago
+
+```bash
+sentinelsat -u <user> -p <password> -g <search_polygon.geojson> --sentinel 2 --cloud 30 --start NOW-14DAYS --producttype S2MSI2A
+```
+
 Download available sentinel 2 product data via `geojson` from the last 24 hours (**NOTE**: that's a lot of gigabytes)
 
 ```bash
-sentinelsat -u <user> -p <password> -g <search_polygon.geojson> --sentinel 2 -d
+sentinelsat -u <user> -p <password> -g <search_polygon.geojson> --sentinel 2 -d --path ./downloads
 ```
 
 Download specific data package via UUID
 
 ```bash
-sentinelsat -u <user> -p <password> --uuid <uuid-of-data-package> -d --path
+sentinelsat -u <user> -p <password> --uuid <uuid-of-data-package> -d --path ./downloads
 ```
 
 ### Process and display data

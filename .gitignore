@@ -1,2 +1,6 @@
 downloads/*
 !downloads/.gitkeep
+processed/*
+!processed/.gitkeep
+.env
+.DS_Store
