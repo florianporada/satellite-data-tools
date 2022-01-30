@@ -17,7 +17,7 @@ def query_data(start_date=date(2021, 5, 1), end_date=date(2021, 10, 1)):
     footprint = geojson_to_wkt(read_geojson('./berlin_tiergarten.geojson'))
     producttypes = ['S2MSI1C', 'S2MSI2A', 'S2MSI2Ap']
     producttype = producttypes[1]
-    cloudcoverpercentage = (0, 30)
+    cloudcoverpercentage = (0, 10)
     date = (start_date, end_date)
 
     products = api.query(footprint,
@@ -83,8 +83,14 @@ def show_histogram(path):
     plot.show_hist(trueColor, bins=50, lw=0.0, stacked=False,
                    alpha=0.3, histtype='stepfilled', title="Histogram")
 
-
+# 1. Step
 # query_data()
+
+# 2. Step
 # download_product(uuid="fc6655b2-83b0-42e2-9a5e-12b0fda57ea8")
+
+# 3. Step
 # create_rgb_image()
+
+# (OTPIONAL) 4. Step
 # show_histogram('./processed/SentinelFalseColor.tiff')
