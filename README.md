@@ -14,6 +14,13 @@ conda env create --file envname.yml
 
 ## Usage
 
+## Specify search region
+
+Create a `geojson` file with a bounding box that defines the search region.
+[geojson.io](http://geojson.io/) is an easy way to create `geojson` files.
+
+![geojson.io example](./docs/geojsonio.png)
+
 ### Query and download data
 
 List available sentinel 2 product data from Berlin with max 30 percent cloud coverage or less from one month until now.
