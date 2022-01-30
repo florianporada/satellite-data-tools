@@ -70,6 +70,7 @@ sentinelsat -u <user> -p <password> --uuid <uuid-of-data-package> -d --path ./do
 - In the `create_rgb_image` function pint the `imagePath` to the downloaded product.
 - execute the `main.py` file with the uncommented `create_rgb_image` function to create an image in the `./processed` folder.
 - Use `QGIS` to display the generated `.tiff` file.
+  ![QGIS Image display](./docs/qgis_image_display.png)
 
 #### Resources for RGB composition and more
 
