@@ -1,8 +1,8 @@
 import os
 from datetime import datetime, date
-import uuid
 from sentinelsat import SentinelAPI, read_geojson, geojson_to_wkt
 import rasterio as rio
+from rasterio import plot
 from dotenv import load_dotenv
 import pprint
 
@@ -41,23 +41,50 @@ def download_product(uuid):
 
 
 def create_rgb_image():
-    R10 = './downloads/S2A_MSIL2A_20220128T101301_N0400_R022_T33UUU_20220128T133019.SAFE/GRANULE/L2A_T33UUU_A034482_20220128T101258/IMG_DATA/R10m/'
+    imagePath = './downloads/S2A_MSIL2A_20220128T101301_N0400_R022_T33UUU_20220128T133019.SAFE/GRANULE/L2A_T33UUU_A034482_20220128T101258/IMG_DATA/R10m/'
+    band2 = rio.open(
+        imagePath+'T33UUU_20220128T101301_B02_10m.jp2', driver='JP2OpenJPEG')  # blue
+    band3 = rio.open(
+        imagePath+'T33UUU_20220128T101301_B03_10m.jp2', driver='JP2OpenJPEG')  # green
+    band4 = rio.open(
+        imagePath+'T33UUU_20220128T101301_B04_10m.jp2', driver='JP2OpenJPEG')  # red
+    band8 = rio.open(
+        imagePath+'T33UUU_20220128T101301_B08_10m.jp2', driver='JP2OpenJPEG')  # nir
 
-    b4 = rio.open(R10+'T33UUU_20220128T101301_B04_10m.jp2',
-                  driver='JP2OpenJPEG')
-    b3 = rio.open(R10+'T33UUU_20220128T101301_B03_10m.jp2',
-                  driver='JP2OpenJPEG')
-    b2 = rio.open(R10+'T33UUU_20220128T101301_B02_10m.jp2',
-                  driver='JP2OpenJPEG')
+    trueColor = rio.open('./processed/SentinelTrueColor2.tiff', 'w', driver='Gtiff',
+                         width=band4.width, height=band4.height,
+                         count=3,
+                         crs=band4.crs,
+                         transform=band4.transform,
+                         dtype=band4.dtypes[0]
+                         )
 
-    with rio.open('./processed/RGB.tiff', 'w', driver='Gtiff', width=b4.width, height=b4.height,
-                  count=3, crs=b4.crs, transform=b4.transform, dtype=b4.dtypes[0]) as rgb:
-        rgb.write(b2.read(1), 1)
-        rgb.write(b3.read(1), 2)
-        rgb.write(b4.read(1), 3)
-        rgb.close()
+    trueColor.write(band2.read(1), 3)  # blue
+    trueColor.write(band3.read(1), 2)  # green
+    trueColor.write(band4.read(1), 1)  # red
+    trueColor.close()
+
+    falseColor = rio.open('./processed/SentinelFalseColor.tiff', 'w', driver='Gtiff',
+                          width=band2.width, height=band2.height,
+                          count=3,
+                          crs=band2.crs,
+                          transform=band2.transform,
+                          dtype='uint16'
+                          )
+
+    falseColor.write(band3.read(1), 3)  # Blue
+    falseColor.write(band4.read(1), 2)  # Green
+    falseColor.write(band8.read(1), 1)  # Red
+    falseColor.close()
+
+
+def show_histogram(path):
+    trueColor = rio.open(path)
+    plot.show_hist(trueColor, bins=50, lw=0.0, stacked=False,
+                   alpha=0.3, histtype='stepfilled', title="Histogram")
 
 
 # query_data()
 # download_product(uuid="fc6655b2-83b0-42e2-9a5e-12b0fda57ea8")
 # create_rgb_image()
+# show_histogram('./processed/SentinelFalseColor.tiff')

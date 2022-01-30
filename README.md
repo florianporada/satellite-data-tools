@@ -28,6 +28,8 @@ Create a `geojson` file with a bounding box that defines the search region.
 
 ### Query and download data
 
+#### CLI
+
 List available sentinel 2 product data from Berlin with max 30 percent cloud coverage or less from one month until now.
 
 ```bash
@@ -58,6 +60,17 @@ Download specific data package via UUID
 sentinelsat -u <user> -p <password> --uuid <uuid-of-data-package> -d --path ./downloads
 ```
 
+#### Python API
+
+- Execute the `query_data` with the desired configuration.
+- Execute the `download_product` function with the specified product uuid.
+
 ### Process and display data
 
-coming soon...
+- In the `create_rgb_image` function pint the `imagePath` to the downloaded product.
+- execute the `main.py` file with the uncommented `create_rgb_image` function to create an image in the `./processed` folder.
+- Use `QGIS` to display the generated `.tiff` file.
+
+#### Resources for RGB composition
+
+https://github.com/arjun-majumdar/Satellite_Image_Analysis/blob/main/Sentinel-2_Satellite_Image_Analysis_with_Python.ipynb
