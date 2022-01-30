@@ -1,4 +1,4 @@
-# Working with Sentinelsat
+# Satellite Data Tools
 
 ## Setup
 
@@ -71,6 +71,7 @@ sentinelsat -u <user> -p <password> --uuid <uuid-of-data-package> -d --path ./do
 - execute the `main.py` file with the uncommented `create_rgb_image` function to create an image in the `./processed` folder.
 - Use `QGIS` to display the generated `.tiff` file.
 
-#### Resources for RGB composition
+#### Resources for RGB composition and more
 
 https://github.com/arjun-majumdar/Satellite_Image_Analysis/blob/main/Sentinel-2_Satellite_Image_Analysis_with_Python.ipynb
+https://gisgeography.com/top-6-free-lidar-data-sources/
