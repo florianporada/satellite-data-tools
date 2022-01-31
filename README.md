@@ -9,7 +9,7 @@
 ### Create conda env
 
 ```bash
-conda env create --file envname.yml
+conda env create --name myenv --file envname.yml
 ```
 
 ### Environment variables
